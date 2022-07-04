@@ -19,6 +19,7 @@ const sample = (array) => array[Math.floor(Math.random()*array.length)];
 
 
 const seedDB = async() =>{
+    console.log('deleting old campgrounds')
     await Campground.deleteMany({});
 
     const c = new Campground({title: 'purple field'});
@@ -27,7 +28,7 @@ const seedDB = async() =>{
         const random10000 = Math.floor(Math.random()*1000);
         const price = Math.floor(Math.random()*20)+10;
         const camp = new Campground({
-            
+            author: '62c08e6954e0efe8fa503e66',
             location: `${cities[random10000].city}, ${cities[random10000].state}`,
             title: `${sample(descriptors)} ${sample(places)}`,
             image: 'https://source.unsplash.com/collection/483251',
@@ -40,4 +41,5 @@ const seedDB = async() =>{
 
 seedDB().then(() =>{
     db.close();
+    console.log('New seed seeded')
 });
