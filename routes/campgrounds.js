@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const campgrounds = require('../controllers/campgrounds')
 const catchAsync = require('../utils/catchAsync');
+const multer = require('multer');
+const {storage} = require('../cloudinary');
+const upload = multer({ storage });
 
 const{isLoggedIn, validateCampground, isAuthor} = require('../middleware');
 
@@ -9,8 +12,11 @@ const Campground = require('../models/campground');
 
 router.route('/')
     .get(catchAsync(campgrounds.index))
-    .post(isLoggedIn, validateCampground, catchAsync(campgrounds.createCampground))
+    //.post(isLoggedIn, validateCampground, catchAsync(campgrounds.createCampground))
+    .post(upload.array('image'), (req, res) => {
+        console.log(req.body, req.files);
 
+    })
 router.get('/new', isLoggedIn, campgrounds.renderNewForm)
 
 router.route('/:id')
