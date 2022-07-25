@@ -17,22 +17,6 @@
                 Looks Good!
             </div>
         </div>
-        <div class="form-file">
-            <input type="file" class="form-file-input" id="customFile">
-            <label class="form-file-label" for="customefile">
-                <span class="form-file-text">Choose file...</span>
-                <span class="form-file-button">Browse</span>
-            </label>
-        </div>
-
-        <input type="file" name="image" id="" multiple> 
- <!--        <div class="mb-3">
-            <label class="form-label" for="image">Image Url</label>
-            <input class="form-control" type="text" id="image" name="campground[image]" required>
-            <div class="valid-feedback">
-                Looks Good!
-            </div>
-        </div> -->
         <div class="mb-3">
             <label class="form-label" for="price">Campground Price</label>
         
@@ -49,6 +33,14 @@
             <textarea class="form-control" type="text" id="description" name="campground[description]" required></textarea>
             <div class="valid-feedback">
                 Looks Good!
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <label for="formFileMultiple" class="form-label">Add Images</label>
+            <input type="file" class="form-control" id="formFileMultiple" name="image" multiple required>
+            <div class="invalid-feedback">
+                This campground would look much better with a picture.
             </div>
         </div>
    
