@@ -22,9 +22,21 @@ router.route('/')
 router.get('/new', isLoggedIn, campgrounds.renderNewForm)
 
 router.route('/:id')
-    .get(catchAsync(campgrounds.showCamground))
-    .put(isLoggedIn , isAuthor, validateCampground, catchAsync(campgrounds.editCampground))
-    .delete(isLoggedIn, isAuthor ,catchAsync(campgrounds.deleteCampground))
+    .get(
+        catchAsync(campgrounds.showCamground)
+        )
+    .put(
+        isLoggedIn,
+        isAuthor,
+        upload.array('image'),
+        validateCampground,
+        catchAsync(campgrounds.editCampground)
+        )
+    .delete(
+        isLoggedIn,
+        isAuthor,
+        catchAsync(campgrounds.deleteCampground)
+        )
 
 router.get('/:id/edit', isLoggedIn, isAuthor, catchAsync(campgrounds.renderEditForm))
  
