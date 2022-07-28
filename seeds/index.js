@@ -23,7 +23,7 @@ const seedDB = async() =>{
     console.log('deleting old campgrounds')
     await Campground.deleteMany({});
 
-    for(let i = 0; i < 50; i++){
+    for(let i = 0; i < 200; i++){
         const random10000 = Math.floor(Math.random()*1000);
         const price = Math.floor(Math.random()*20)+10;
         const camp = new Campground({
@@ -34,7 +34,10 @@ const seedDB = async() =>{
             price: price, 
             geometry: { 
               type: 'Point', 
-              coordinates: [ 5.194019, 59.25722 ] 
+              coordinates: [ 
+                cities[random10000].longitude, 
+                cities[random10000].latitude 
+                ] 
             },
             images: [
                 {
