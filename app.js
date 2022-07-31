@@ -1,6 +1,7 @@
 if (process.env.NODE_ENV !== "production") {
     require('dotenv').config();
 }
+
 const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -21,8 +22,12 @@ const usersRoutes = require('./routes/users');
 const campgroundsRoutes = require('./routes/campgrounds');
 const reviewsRoutes = require('./routes/reviews');
 
+const MongoStore = require('connect-mongo');
 
-mongoose.connect('mongodb://localhost:2000/yelp-camp', {
+//const dbUrl = process.env.DB_URL;
+const dbUrl = 'mongodb://localhost:2000/yelp-camp'
+
+mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })  //useCreateIndex: true,  - is removed due to not beeing supported for version 6 and up.
@@ -97,8 +102,18 @@ app.use(
     })
 );
 
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+    secret: 'ThisShouldBeABetterSecret!',
+    touchAfter: 24 * 60 * 60
+});
+
+store.on("error", function(e){
+    console.log('SESSION STORE ERROR', e)
+})
 
 const sessionConfig = {
+    store,
     name: 'not-the-session-name',
     secret: 'ThisShouldBeABetterSecret!',
     resave: false,
