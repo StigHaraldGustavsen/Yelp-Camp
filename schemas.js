@@ -24,6 +24,9 @@ const extension = (joi) => ({
 const Joi = BaseJoi.extend(extension)
 
 module.exports.campgroundSchema = Joi.object({
+    CoordSource:Joi.string().escapeHTML(),
+    longitude:Joi.string().escapeHTML(),
+    latitude:Joi.string().escapeHTML(),
     campground: Joi.object({
         title: Joi.string().required().escapeHTML(),
         price: Joi.number().required().min(0),
