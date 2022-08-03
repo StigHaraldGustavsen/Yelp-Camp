@@ -11,6 +11,38 @@
                     Looks Good!
                 </div>
             </div>
+
+            <div class="mb-3">
+                <label class="form-label" >Update coordinates from</label>
+                <div class="mb-3">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="CoordSource" id="flexRadioFromLocation" value="location" checked>
+                    <label class="form-check-label" for="flexRadioFromLocation">
+                      location
+                    </label>
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="CoordSource" id="flexRadioDevice" value="device">
+                    <label class="form-check-label" for="flexRadioDevice">
+                      your devices
+                    </label>
+                  </div>
+<!--                   <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="CoordSource" id="flexRadioMap" value="map">
+                    <label class="form-check-label" for="flexRadioMap">
+                      Manual on map (not yet implemented)
+                    </label>
+                  </div> -->
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="CoordSource" id="flexRadioManual" value="manual">
+                    <label class="form-check-label" for="flexRadioManual">
+                      manual
+                    </label>
+                  </div>
+                </div>
+            </div>
+
+
             <div class="mb-3">
                 <label class="form-label" for="location">location</label>
                 <input class="form-control" type="text" id="location" name="campground[location]" value="<%= campground.location %>" required>
@@ -18,6 +50,23 @@
                     Looks Good!
                 </div>
             </div>
+
+            <div class="mb-3" id="lon">
+                
+                <label class="form-label" for="longitude">longitude</label>
+                <input class="form-control" type="text" id="longitude" name="longitude" value="<%= campground.geometry.coordinates[0] %>" readonly>
+                <div class="valid-feedback">
+                    Looks Good!
+                </div>
+            
+        </div>
+        <div class="mb-3" id="lat">
+            <label class="form-label" for="latitude">latitude</label>
+            <input class="form-control" type="text" id="latitude" name="latitude" value="<%= campground.geometry.coordinates[1] %>" readonly>
+            <div class="valid-feedback">
+                Looks Good!
+            </div>
+        </div>
 
             <div class="mb-3">
                 <label class="form-label" for="price">Campground Price</label>
@@ -68,3 +117,8 @@
     
     </div>
     <a href="/campgrounds/<%=campground._id%>">Back to campground</a>
+
+<script>
+    const newCampground = false;
+</script>
+<script src="/javascripts/campgroundDialog.js"></script>

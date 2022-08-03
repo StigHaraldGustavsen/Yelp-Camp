@@ -1,11 +1,14 @@
 //const campground = require('../models/campground');
 const Campground = require('../models/campground');
+const isValidCoordinates = require('is-valid-coordinates')
 
 const mbxGeocoding = require('@mapbox/mapbox-sdk/services/geocoding');
 const mapBoxToken = process.env.MAPBOX_TOKEN;
 const geocoder = mbxGeocoding({accessToken:mapBoxToken});
 
 const {cloudinary} = require("../cloudinary");
+
+
 
 module.exports.index = async (req,res) => {
     const campgrounds = await Campground.find({});
@@ -17,19 +20,52 @@ module.exports.renderNewForm = (req,res)=>{
 }
 
 module.exports.createCampground = async (req,res,next)=>{
-    const geoData = await geocoder.forwardGeocode({
-        query:req.body.campground.location,
-        limit: 1
-    }).send();
-    
-    //if(!req.body.campground) throw new ExpressError('invalid Campground Data', 400);
+    //{ type: 'Point', coordinates: [ -122.4077498, 37.654656 ] }
     const campground = new Campground(req.body.campground);
-    campground.geometry = geoData.body.features[0].geometry
+    const CoordSource = req.body.CoordSource
+
+    console.log(req.body)
+
+    if (CoordSource == "location") {
+        console.log('coords from geocode')
+        const geoData = await geocoder.forwardGeocode({
+            query:req.body.campground.location,
+            limit: 1
+        }).send();
+        console.log(geoData.body.features[0].geometry)
+        campground.geometry = geoData.body.features[0].geometry
+    }
+    if (CoordSource === 'device' || CoordSource === 'manual') {
+        
+        const {longitude,latitude} = req.body      
+        if(isValidCoordinates(Number(longitude),Number(latitude))){
+            const GeoJSON = { 
+                coordinates: [ 
+                    Number(longitude), 
+                    Number(latitude) 
+                ],
+                type: 'Point',
+            };
+            campground.geometry = GeoJSON;
+            
+        }
+        else if(typeof(longitude)=="number" &&typeof(latitude)=="number" ) {
+            req.flash('error', 'coordinates given where not accepted, used geocode form location insted')
+            const geoData = await geocoder.forwardGeocode({
+                query:req.body.campground.location,
+                limit: 1
+            }).send();
+            campground.geometry = geoData.body.features[0].geometry
+        }
+    }
+    //if(!req.body.campground) throw new ExpressError('invalid Campground Data', 400);
+    
+    
     campground.images = req.files.map(f => ({url: f.path, filename: f.filename}))
     campground.author = req.user._id;
     await campground.save();
     console.log(campground);
-    req.flash('success', 'Sucsessfulle created a new campground');
+    req.flash('success', 'Sucsessfully created a new campground');
     res.redirect(`campgrounds/${campground._id}`)
 }
 
