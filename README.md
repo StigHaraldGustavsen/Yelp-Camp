@@ -1,6 +1,6 @@
-# LearningWebDev
+# Yelp-camp
 
-YelpCamp project in web developer bootcamp by colt steel :)
+YelpCamp project in web developer bootcamp by colt steel :) added some extras tho, like getting Geodata from device and dockerized the application.
 
 change the dot.env to .env and insert the values, if the enviroment variables are not supplied from elsewhere. but use the dot.env as the nameing convention.  
 
