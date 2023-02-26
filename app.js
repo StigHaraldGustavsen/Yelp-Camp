@@ -27,6 +27,8 @@ const MongoStore = require('connect-mongo');
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:2000/yelp-camp';
 //const dbUrl = 'mongodb://localhost:2000/yelp-camp';
 
+mongoose.set('strictQuery', true)
+mongoose.set('strictQuery', true)
 mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -39,7 +41,6 @@ db.once('open', () =>{
 });
 
 const app = express();
-
 
 app.engine('ejs', ejsMate)
 app.set('view engine', 'ejs');

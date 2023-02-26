@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
 const Campground = require('../models/campground')
+const User = require('../models/user')
+require('dotenv').config()
 
 const cities = require('./cities');
 const {places, descriptors} = require('./seedHelpers');
+//mongoose.set('strictQuery', true)
 
 mongoose.connect('mongodb://localhost:2000/yelp-camp', {
     useNewUrlParser: true,
@@ -16,18 +19,24 @@ db.once('open', () =>{
 });
 
 const sample = (array) => array[Math.floor(Math.random()*array.length)];
-//laptops : 62def3e5791e2f28c1dc67da
-//dekstop : 62def3e5791e2f28c1dc67da
 
 const seedDB = async() =>{
     console.log('deleting old campgrounds')
     await Campground.deleteMany({});
-
+    console.log('deleting users')
+    await User.deleteMany({});
+    email = process.env.DEV_USER_EMAIL
+    username = process.env.DEV_USER 
+    password = process.env.DEV_PASSWORD 
+    const user = new User({email,username});
+    const registeredUser =   await User.register(user,password);
+    
+    console.log(registeredUser)
     for(let i = 0; i < 20; i++){
         const random10000 = Math.floor(Math.random()*1000);
         const price = Math.floor(Math.random()*20)+10;
         const camp = new Campground({
-            author: '62def3e5791e2f28c1dc67da',
+            author: registeredUser._id,
             location: `${cities[random10000].city}, ${cities[random10000].state}`,
             title: `${sample(descriptors)} ${sample(places)}`,
             description: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Itaque, quam quos ut blanditiis optio est dignissimos quidem! Possimus dicta vero ut, aspernatur ipsum aperiam dolorum? Saepe repellendus sunt esse itaque.',

@@ -24,15 +24,15 @@ module.exports.createCampground = async (req,res,next)=>{
     const campground = new Campground(req.body.campground);
     const CoordSource = req.body.CoordSource
 
-    console.log(req.body)
+    //console.log(req.body)
 
     if (CoordSource == "location") {
-        console.log('coords from geocode')
+        //console.log('coords from geocode')
         const geoData = await geocoder.forwardGeocode({
             query:req.body.campground.location,
             limit: 1
         }).send();
-        console.log(geoData.body.features[0].geometry)
+        //console.log(geoData.body.features[0].geometry)
         campground.geometry = geoData.body.features[0].geometry
     }
     if (CoordSource === 'device' || CoordSource === 'manual') {
