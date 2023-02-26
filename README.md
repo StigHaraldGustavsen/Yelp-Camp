@@ -9,6 +9,17 @@ docker compose up -d
 ```
 the DB_URL is gotten from the docker compose file, but if it not run with docker compose, the DB_URL might be ommitted if the mongo db is hosted locally but if it is hosted for mongo atlas then add the DB connection string. else it should be a part of the dockercompose build.
 
+Seed the database in the dockercomposed running appliation
+```bash
+docker exec yelp-camp-web_app-1 node seeds/index.js mongodb://database/yelp-camp
+```
+delete the database
+```bash
+docker exec yelp-camp-web_app-1 node seeds/delete.js mongodb://database/yelp-camp
+```
+Note: the container names can change, but the 3 first chars or more of the container ID also work
+
+
 # developer notes:
 ```bash 
 npm install
