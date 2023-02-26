@@ -29,6 +29,12 @@ seed the dev database use; DEV_USER, DEV_USER_EMAIL and DEV_PASSWORD enviroment 
 ```bash 
 node seeds/index.js 
 ```
+the database connection url can be added as an argument to the seeds/index.js
+```bash 
+node seeds/index.js mongodb://database/yelp-camp
+```
+
+
 
 mongosh CLI in container
 ```bash 

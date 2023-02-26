@@ -6,8 +6,9 @@ require('dotenv').config()
 const cities = require('./cities');
 const {places, descriptors} = require('./seedHelpers');
 //mongoose.set('strictQuery', true)
+const dbUrl = process.argv[2] || process.env.DB_URL || 'mongodb://localhost:2000/yelp-camp';
 
-mongoose.connect('mongodb://localhost:2000/yelp-camp', {
+mongoose.connect(dbUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })  //useCreateIndex: true,  - is removed due to not beeing supported for version 6 and up.
