@@ -2,13 +2,16 @@
 
 YelpCamp project in web developer bootcamp by colt steel :)
 
+change the dot.env to .env and insert the values, if the enviroment variables are not supplied from elsewhere. but use the dot.env as the nameing convention.  
+
 ```bash 
-npm install
+docker compose up -d
 ```
-change the dot.env to .env and insert the values, if the enviroment variables are not supplied from elsewhere. but use the dot.env as the nameing convention. the DB_URL might be ommitted if the mongo db is hosted locally but if it is hosted for mongo atlas then add the DB connection string. else it should be a part of the dockercompose build.
+the DB_URL is gotten from the docker compose file, but if it not run with docker compose, the DB_URL might be ommitted if the mongo db is hosted locally but if it is hosted for mongo atlas then add the DB connection string. else it should be a part of the dockercompose build.
 
 # developer notes:
 ```bash 
+npm install
 npm install -g nodemon
 ```
 
@@ -22,7 +25,7 @@ developer notes - running localc mongodb in docker
 ```bash 
 docker run -d -p 2000:27017 -v webdevcoursemdb:/data/db  --name mdb mongo
 ```
-seed the database
+seed the dev database use; DEV_USER, DEV_USER_EMAIL and DEV_PASSWORD enviroment variables for the dev user in the dev db.
 ```bash 
 node seeds/index.js 
 ```
