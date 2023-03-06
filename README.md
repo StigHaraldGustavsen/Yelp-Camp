@@ -4,6 +4,11 @@ YelpCamp project in web developer bootcamp by colt steel :) added some extras th
 
 change the dot.env to .env and insert the values, if the enviroment variables are not supplied from elsewhere. but use the dot.env as the nameing convention.  
 
+### 1. Fill secrets into 'dot.env' and rename it to '.env'
+```bash 
+mv dot.env .env
+```
+### 2. build and exce containers
 ```bash 
 docker compose up -d
 ```

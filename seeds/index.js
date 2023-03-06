@@ -33,7 +33,7 @@ const seedDB = async() =>{
     const registeredUser =   await User.register(user,password);
     
     console.log(registeredUser)
-    for(let i = 0; i < 20; i++){
+    for(let i = 0; i < 50; i++){
         const random10000 = Math.floor(Math.random()*1000);
         const price = Math.floor(Math.random()*20)+10;
         const camp = new Campground({
